@@ -17,9 +17,10 @@ interface FieldLabelProps {
 
 const FieldLabel: React.FC<FieldLabelProps> = ({ fieldConfig }) => {
 	const Label = fieldConfig.uiType === 'Group' ? L : FormLabel
+	const labelText = removeUnderscores(fieldConfig.label)
 	return (
 		<Label>
-			{removeUnderscores(fieldConfig.label)}
+			{labelText}
 			{fieldConfig?.validate?.required && (
 				<span className='text-red-400'>*</span>
 			)}
@@ -33,7 +34,7 @@ const FieldLabel: React.FC<FieldLabelProps> = ({ fieldConfig }) => {
 						</TooltipTrigger>
 						<TooltipContent className='bg-white border border-sky-100 text-sm'>
 							<div>
-								<span className='text-gray-900'>{fieldConfig.label}</span>
+								<span className='text-gray-900'>{labelText}</span>
 								<Separator className='my-1' />
 								<span className='text-slate-600'>
 									{fieldConfig.description}
