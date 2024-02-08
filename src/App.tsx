@@ -5,7 +5,6 @@ import Pizza from '@/assets/pizza.json'
 
 import { useState } from 'react'
 
-import type { UIConfiguration } from './types/types'
 import type { UIParameter } from './types/types'
 
 function App() {

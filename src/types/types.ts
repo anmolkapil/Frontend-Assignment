@@ -1,4 +1,4 @@
-import type { UseFormReturn, ValidationRule } from 'react-hook-form'
+import type { UseFormReturn } from 'react-hook-form'
 
 type UIType = 'Radio' | 'Input' | 'Select' | 'Switch' | 'Group' | 'Ignore'
 
