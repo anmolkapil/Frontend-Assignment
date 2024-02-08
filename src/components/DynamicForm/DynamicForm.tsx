@@ -31,11 +31,13 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ schema }) => {
 		setOpen(true)
 	}
 
+	const [globalShowAdvanced, setGlobalShowAdvanced] = useState(false)
+
 	useEffect(() => {
 		form.reset()
+		console.log('')
+		setGlobalShowAdvanced(false)
 	}, [schema])
-
-	const [globalShowAdvanced, setGlobalShowAdvanced] = useState(false)
 
 	return (
 		<Form {...form}>
@@ -61,6 +63,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ schema }) => {
 						<Switch
 							id='global-show-fields'
 							className='data-[state=checked]:bg-indigo-600'
+							checked={globalShowAdvanced}
 							onCheckedChange={(e) => setGlobalShowAdvanced(e)}
 						/>
 					</div>
