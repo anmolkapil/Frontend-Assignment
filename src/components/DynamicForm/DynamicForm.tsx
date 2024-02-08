@@ -1,9 +1,8 @@
 import { useForm } from 'react-hook-form'
 import FieldRenderer from './FieldRenderer'
-import Schema from '@/assets/pizza.json'
 import { Button } from '@/components/ui/button'
 import { Form } from '@/components/ui/form'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
 import { Separator } from '@/components/ui/separator'
@@ -16,17 +15,25 @@ import {
 	DialogTitle,
 } from '@/components/ui/dialog'
 
-const DynamicForm = ({ schema }) => {
+interface DynamicFormProps {
+	schema: any
+}
+
+const DynamicForm: React.FC<DynamicFormProps> = ({ schema }) => {
 	const form = useForm()
 
 	const [open, setOpen] = useState(false)
 	const [result, setResult] = useState('')
 
-	const onSubmit = (data) => {
-		const xyz = JSON.stringify(data, null, 2)
-		setResult(xyz)
+	const onSubmit = (data: any) => {
+		const jsonData = JSON.stringify(data, null, 2)
+		setResult(jsonData)
 		setOpen(true)
 	}
+
+	useEffect(() => {
+		form.reset()
+	}, [schema])
 
 	const [globalShowAdvanced, setGlobalShowAdvanced] = useState(false)
 
@@ -37,7 +44,7 @@ const DynamicForm = ({ schema }) => {
 				className='space-y-4 p-4 border rounded-lg border-slate-800'
 			>
 				<Label>
-					New {schema[0].label.split(' ')[0]}
+					New {schema[0]?.label?.split(' ')[0]}
 					<Separator className='mt-2' />
 				</Label>
 

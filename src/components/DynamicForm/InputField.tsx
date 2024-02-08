@@ -2,16 +2,22 @@ import {
 	FormControl,
 	FormField,
 	FormItem,
-	FormLabel,
 	FormMessage,
 } from '@/components/ui/form'
 
+import FieldLabel from './FieldLabel'
+
 import { Input } from '@/components/ui/input'
 
-import { removeUnderscores } from '@/utils/utils'
 import { clsx } from 'clsx'
 
-const InputField = ({ fieldConfig, form, parent }) => (
+import type { FormFieldProps } from '@/types/types'
+
+const InputField: React.FC<FormFieldProps> = ({
+	fieldConfig,
+	form,
+	parent,
+}) => (
 	<FormField
 		control={form.control}
 		name={
@@ -23,7 +29,9 @@ const InputField = ({ fieldConfig, form, parent }) => (
 		shouldUnregister={!fieldConfig.disable}
 		rules={{
 			required: fieldConfig.validate?.required,
-			pattern: fieldConfig.validate?.pattern,
+			...(fieldConfig.validate?.pattern && {
+				pattern: RegExp(fieldConfig.validate?.pattern),
+			}),
 		}}
 		render={({ field }) => (
 			<FormItem
@@ -31,17 +39,12 @@ const InputField = ({ fieldConfig, form, parent }) => (
 					hidden: fieldConfig.disable,
 				})}
 			>
-				<FormLabel>
-					{removeUnderscores(fieldConfig.label)}
-					{fieldConfig.validate.required && (
-						<span className='text-red-400'> *</span>
-					)}
-				</FormLabel>
+				<FieldLabel fieldConfig={fieldConfig} />
 				<FormControl>
 					<Input
 						className='bg-sky-100 border-blue-200 focus-visible:ring-indigo-200'
 						placeholder={fieldConfig.placeholder}
-						disabled={fieldConfig.disable}
+						disabled={fieldConfig.validate?.immutable}
 						{...field}
 					/>
 				</FormControl>

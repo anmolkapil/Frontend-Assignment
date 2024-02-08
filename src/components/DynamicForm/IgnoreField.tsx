@@ -1,6 +1,15 @@
 import FieldRenderer from './FieldRenderer'
 
-const IgnoreField = ({ fieldConfig, form, parent, globalShowAdvanced }) => {
+import type { FormFieldProps } from '@/types/types'
+
+const IgnoreField: React.FC<FormFieldProps> = ({
+	fieldConfig,
+	form,
+	parent,
+	globalShowAdvanced,
+}) => {
+	if (!fieldConfig.subParameters || !fieldConfig.conditions) return
+
 	let isVisible = true
 	const { jsonKey, op, value } = fieldConfig.conditions[0]
 	switch (op) {

@@ -3,14 +3,18 @@ import {
 	FormDescription,
 	FormField,
 	FormItem,
-	FormLabel,
 	FormMessage,
 } from '@/components/ui/form'
+import FieldLabel from './FieldLabel'
 import { Checkbox } from '@/components/ui/checkbox'
 
-import { removeUnderscores } from '@/utils/utils'
+import type { FormFieldProps } from '@/types/types'
 
-const SwitchField = ({ fieldConfig, form, parent }) => {
+const SwitchField: React.FC<FormFieldProps> = ({
+	fieldConfig,
+	form,
+	parent,
+}) => {
 	return (
 		<FormField
 			control={form.control}
@@ -27,15 +31,11 @@ const SwitchField = ({ fieldConfig, form, parent }) => {
 						<Checkbox
 							checked={field.value}
 							onCheckedChange={field.onChange}
+							disabled={fieldConfig.validate?.immutable}
 							{...field}
 						/>
 					</FormControl>
-					<FormLabel className='text-sm font-normal'>
-						{removeUnderscores(fieldConfig.label)}
-						{fieldConfig.validate.required && (
-							<span className='text-red-400'> *</span>
-						)}
-					</FormLabel>
+					<FieldLabel fieldConfig={fieldConfig} />
 					<FormDescription>{fieldConfig.description}</FormDescription>
 					<FormMessage />
 				</FormItem>

@@ -1,14 +1,21 @@
 import FieldRenderer from './FieldRenderer'
 import { useEffect, useState } from 'react'
 
-import { removeUnderscores } from '@/utils/utils'
-
 import { Switch } from '@/components/ui/switch'
 import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
+import FieldLabel from './FieldLabel'
 
-const GroupField = ({ fieldConfig, form, globalShowAdvanced }) => {
-	let showToggle = fieldConfig.subParameters.some(
+import { FormFieldProps } from '@/types/types'
+
+const GroupField: React.FC<FormFieldProps> = ({
+	fieldConfig,
+	form,
+	globalShowAdvanced,
+}) => {
+	if (!fieldConfig.subParameters) return
+
+	let showToggle = fieldConfig.subParameters?.some(
 		(f) => !f.validate.required && f.level > 0
 	)
 
@@ -21,12 +28,7 @@ const GroupField = ({ fieldConfig, form, globalShowAdvanced }) => {
 
 	return (
 		<div>
-			<Label>
-				{removeUnderscores(fieldConfig.label)}
-				{fieldConfig.validate.required && (
-					<span className='text-red-400'> *</span>
-				)}
-			</Label>
+			<FieldLabel fieldConfig={fieldConfig} />
 			<Separator className='my-3' />
 			<div className='space-y-4'>
 				<FieldRenderer

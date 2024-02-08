@@ -5,13 +5,30 @@ import Pizza from '@/assets/pizza.json'
 
 import { useState } from 'react'
 
+import type { UIConfiguration } from './types/types'
+import type { UIParameter } from './types/types'
+
 function App() {
-	const [schema, setSchema] = useState(Pizza)
-	const handleGenerateForm = (json) => {
+	const [schema, setSchema] = useState<any>(Pizza)
+
+	const isValidUIParameter = (param: any): param is UIParameter => {
+		return (
+			typeof param.sort === 'number' &&
+			typeof param.label === 'string' &&
+			typeof param.jsonKey === 'string'
+		)
+	}
+
+	const handleGenerateForm = (json: string) => {
 		try {
-			setSchema(JSON.parse(json))
+			const parsedJson = JSON.parse(json)
+			if (Array.isArray(parsedJson) && parsedJson.every(isValidUIParameter)) {
+				setSchema(parsedJson)
+			} else {
+				throw new Error('Invalid config')
+			}
 		} catch {
-			window.alert('json error')
+			window.alert('JSON error or invalid config')
 		}
 	}
 

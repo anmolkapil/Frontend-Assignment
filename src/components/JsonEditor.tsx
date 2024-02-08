@@ -5,7 +5,11 @@ import Pizza from '@/assets/pizza.json'
 
 import { useState } from 'react'
 
-const JsonEditor = ({ onGenerateForm }) => {
+interface JsonEditorProps {
+	onGenerateForm: (json: string) => void
+}
+
+const JsonEditor: React.FC<JsonEditorProps> = ({ onGenerateForm }) => {
 	const [json, setJson] = useState(JSON.stringify(Pizza, null, 2))
 	return (
 		<div className='h-full flex flex-col'>

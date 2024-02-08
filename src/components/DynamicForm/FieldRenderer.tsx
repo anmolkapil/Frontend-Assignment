@@ -16,7 +16,18 @@ const fieldComponents = {
 
 import clsx from 'clsx'
 
-const FieldRenderer = ({
+import type { UseFormReturn } from 'react-hook-form'
+import type { UIConfiguration } from '@/types/types'
+
+interface FieldRendererProps {
+	fields: UIConfiguration | null
+	form: UseFormReturn<any>
+	parent: string | null
+	globalShowAdvanced: boolean
+	groupToggle: boolean
+}
+
+const FieldRenderer: React.FC<FieldRendererProps> = ({
 	fields,
 	form,
 	parent,
@@ -26,9 +37,8 @@ const FieldRenderer = ({
 	return (
 		<>
 			{fields
-				.sort((a, b) => a.sort - b.sort)
+				?.sort((a, b) => a.sort - b.sort)
 				.map((field) => {
-					// Handle Group type separately for recursive rendering
 					// Dynamically select the component based on the field's uiType
 					const FieldComponent = fieldComponents[field.uiType]
 					if (!FieldComponent) {
@@ -37,24 +47,25 @@ const FieldRenderer = ({
 					}
 
 					return (
-						((field.level === 0 && globalShowAdvanced) ||
-							groupToggle ||
-							field.validate.required) && (
-							<div
-								key={field.jsonKey}
-								className={clsx({
-									'p-4 border rounded border-sky-100 bg-sky-100/50':
-										field.level === 0,
-								})}
-							>
-								<FieldComponent
-									fieldConfig={field}
-									form={form}
-									parent={parent}
-									globalShowAdvanced={globalShowAdvanced}
-								/>
-							</div>
-						)
+						<div
+							key={field.jsonKey}
+							className={clsx({
+								'p-4 border rounded border-sky-100 bg-sky-100/50':
+									field.level === 0,
+								hidden:
+									field.level > 0 &&
+									!globalShowAdvanced &&
+									!groupToggle &&
+									!field.validate.required,
+							})}
+						>
+							<FieldComponent
+								fieldConfig={field}
+								form={form}
+								parent={parent}
+								globalShowAdvanced={globalShowAdvanced}
+							/>
+						</div>
 					)
 				})}
 		</>

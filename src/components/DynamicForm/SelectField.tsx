@@ -2,7 +2,6 @@ import {
 	FormControl,
 	FormField,
 	FormItem,
-	FormLabel,
 	FormMessage,
 } from '@/components/ui/form'
 
@@ -14,9 +13,15 @@ import {
 	SelectValue,
 } from '@/components/ui/select'
 
-import { removeUnderscores } from '@/utils/utils'
+import FieldLabel from './FieldLabel'
 
-const SelectField = ({ fieldConfig, form, parent, showAdvanced }) => (
+import type { FormFieldProps } from '@/types/types'
+
+const SelectField: React.FC<FormFieldProps> = ({
+	fieldConfig,
+	form,
+	parent,
+}) => (
 	<FormField
 		control={form.control}
 		name={
@@ -28,15 +33,11 @@ const SelectField = ({ fieldConfig, form, parent, showAdvanced }) => (
 		shouldUnregister={true}
 		render={({ field }) => (
 			<FormItem className='grid grid-cols-2 items-center'>
-				<FormLabel>
-					{removeUnderscores(fieldConfig.label)}
-					{fieldConfig.validate.required && (
-						<span className='text-red-400'> *</span>
-					)}
-				</FormLabel>
+				<FieldLabel fieldConfig={fieldConfig} />
 				<Select
 					onValueChange={field.onChange}
 					defaultValue={field.value}
+					disabled={fieldConfig.validate?.immutable}
 					{...field}
 				>
 					<FormControl>
@@ -45,7 +46,7 @@ const SelectField = ({ fieldConfig, form, parent, showAdvanced }) => (
 						</SelectTrigger>
 					</FormControl>
 					<SelectContent>
-						{fieldConfig.validate.options.map((option) => (
+						{fieldConfig.validate?.options?.map((option) => (
 							<SelectItem key={option.value} value={option.value}>
 								{option.value}
 							</SelectItem>

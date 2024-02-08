@@ -2,7 +2,7 @@
 	{
 		"sort": 1,
 		"label": "Pizza Name",
-		"description": "",
+		"description": "Name of Pizza",
 		"validate": {
 			"required": true,
 			"immutable": false
