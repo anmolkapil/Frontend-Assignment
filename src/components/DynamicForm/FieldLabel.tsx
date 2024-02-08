@@ -26,7 +26,7 @@ const FieldLabel: React.FC<FieldLabelProps> = ({ fieldConfig }) => {
 			{fieldConfig.description.length > 0 && (
 				<TooltipProvider>
 					<Tooltip>
-						<TooltipTrigger>
+						<TooltipTrigger onClick={(e) => e.preventDefault()}>
 							<div className='ml-2 rounded-full bg-blue-500 h-4 w-4 grid items-center text-white font-mono text-xs'>
 								i
 							</div>
