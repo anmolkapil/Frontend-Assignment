@@ -53,8 +53,7 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({
 								'p-4 border rounded border-sky-100 bg-sky-100/50':
 									field.level === 0,
 								hidden:
-									field.level > 0 &&
-									!globalShowAdvanced &&
+									(field.level > 0 || !globalShowAdvanced) &&
 									!groupToggle &&
 									!field.validate.required,
 							})}
