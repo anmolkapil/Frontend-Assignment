@@ -38,7 +38,6 @@ const SelectField: React.FC<FormFieldProps> = ({
 					onValueChange={field.onChange}
 					defaultValue={field.value}
 					disabled={fieldConfig.validate?.immutable}
-					{...field}
 				>
 					<FormControl>
 						<SelectTrigger className='bg-sky-100 border-blue-200 focus:ring-indigo-200'>

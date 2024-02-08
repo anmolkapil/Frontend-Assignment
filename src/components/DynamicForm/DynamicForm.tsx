@@ -35,7 +35,6 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ schema }) => {
 
 	useEffect(() => {
 		form.reset()
-		console.log('')
 		setGlobalShowAdvanced(false)
 	}, [schema])
 

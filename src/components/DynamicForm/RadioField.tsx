@@ -29,7 +29,6 @@ const RadioField: React.FC<FormFieldProps> = ({
 							className='w-full'
 							onValueChange={field.onChange}
 							defaultValue={field.value}
-							{...field}
 						>
 							<TabsList className='flex bg-transparent gap-x-2'>
 								{fieldConfig.validate?.options?.map((option) => (

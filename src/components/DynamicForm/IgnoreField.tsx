@@ -12,10 +12,26 @@ const IgnoreField: React.FC<FormFieldProps> = ({
 
 	let isVisible = true
 	const { jsonKey, op, value } = fieldConfig.conditions[0]
+	const currentValue = form.watch(jsonKey)
+
 	switch (op) {
 		case '==':
-			if (form.watch(jsonKey) == value) isVisible = true
-			else isVisible = false
+			isVisible = currentValue == value
+			break
+		case '!=':
+			isVisible = currentValue != value
+			break
+		case '>':
+			isVisible = currentValue > value
+			break
+		case '<':
+			isVisible = currentValue < value
+			break
+		case '>=':
+			isVisible = currentValue >= value
+			break
+		case '<=':
+			isVisible = currentValue <= value
 			break
 		default:
 			isVisible = true

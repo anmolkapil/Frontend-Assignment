@@ -32,7 +32,6 @@ const SwitchField: React.FC<FormFieldProps> = ({
 							checked={field.value}
 							onCheckedChange={field.onChange}
 							disabled={fieldConfig.validate?.immutable}
-							{...field}
 						/>
 					</FormControl>
 					<FieldLabel fieldConfig={fieldConfig} />
